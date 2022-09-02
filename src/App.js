@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react' ;
 
-function App() {
+ const App = () => {
+ 
+  const [todo, setTodo] = useState ([
+    {
+      id: Math.random(),
+      task: "learn ReactJs",
+      isDone: false
+    },
+    {
+      id: Math.random(),
+      task: "learn Redux",
+      isDone: false
+    },
+    {
+      id: Math.random(),
+      task: "learn Express Js",
+      isDone: false
+    },
+  ])
+
+  const handleDelete = (id) => {
+    setTodo(
+      todo.filter((el) => el.id !=id )
+    )
+  };
+
+  const handleComplete = (id) => {
+    setTodo(
+      todo.map((el) => el.id === id? {...el,isDone: !el.isDone} : el)
+    )
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{textAlign:"center"}}>
+     {todo.map((el) =>(
+      <div id='div'>
+      <p>{el.id}</p>
+      <h2>{el.task}</h2>
+      <button onClick={()=> handleDelete(el.id)}>Delete task</button>
+      <button onClick={()=> handleComplete(el.id)}>Task completed</button>
+      </div>
+     ))}
     </div>
-  );
+  )
 }
-
-export default App;
+export default  App ;
